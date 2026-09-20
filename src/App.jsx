@@ -5,12 +5,14 @@ import { fetchImages } from "./api";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Loader from "./components/Loader/Loader";
 import Button from "./components/Button/Button";
+import Modal from "./components/Modal/Modal";
 
 function App() {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1)
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(false)
+  const [selectImage, setSelectImage] = useState(null)
 
   useEffect(()=>{
     if(!query){
@@ -34,13 +36,13 @@ setPage(prev => prev+1)
 
 console.log(images);
 
-
   return (
     <>
       <Searchbar onSearch={handleSerch} />
       {loading&&<Loader />}
       <ImageGallery images={images} />
       {images.length>0&&<Button onClick={loadMore}/>}
+      {selectImage&&<Modal />}
     </>
   );
 }
