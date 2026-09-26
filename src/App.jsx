@@ -9,40 +9,47 @@ import Modal from "./components/Modal/Modal";
 
 function App() {
   const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1)
-  const [images, setImages] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [selectImage, setSelectImage] = useState(null)
+  const [page, setPage] = useState(1);
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectImage, setSelectImage] = useState(null);
 
-  useEffect(()=>{
-    if(!query){
-      return
+
+  useEffect(() => {
+    if (!query) {
+      return;
     }
-    setLoading(true)
-    fetchImages(query, page).then(res => {
-      setImages(prev => [...prev, ...res.hits])
-    }).finally(()=>setLoading(false))
-  }, [query, page])
+    setLoading(true);
+    fetchImages(query, page)
+      .then((res) => {
+        setImages((prev) => [...prev, ...res.hits]);
+      })
+      .finally(() => setLoading(false));
+  }, [query, page]);
 
   const handleSerch = (text) => {
     setQuery(text);
-    // setPage(1)
   };
 
-const loadMore = () => {
-setPage(prev => prev+1)
+  const loadMore = () => {
+    setPage((prev) => prev + 1);
+  };
 
-}
+  const handleImageClick = (url) => {
+ setSelectImage(url)
+  }
 
-console.log(images);
+  const closeModal = () => {
+    setSelectImage(null)
+  }
 
   return (
     <>
       <Searchbar onSearch={handleSerch} />
-      {loading&&<Loader />}
-      <ImageGallery images={images} />
-      {images.length>0&&<Button onClick={loadMore}/>}
-      {selectImage&&<Modal />}
+      {loading && <Loader />}
+      <ImageGallery images={images} onImageClick={handleImageClick}/>
+      {images.length > 0 && <Button onClick={loadMore} />}
+      {selectImage && <Modal onClose={closeModal} onImageUrl={selectImage}/>}
     </>
   );
 }

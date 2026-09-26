@@ -1,13 +1,31 @@
+import style from "./Modal.module.css"
+import { useEffect } from "react"
 
+function Modal({onImageUrl, onClose}){
 
+    const handleEscClose = (evt) => {
+        if(evt.code === "Escape") {
+            onClose()
+        }
+    }
 
-function Modal(){
+    const handleBackdropClose = (evt) => {
+        if(evt.target === evt.currentTarget) {
+            onClose()
+        }
+    }
+
+    useEffect(()=>{
+        window.addEventListener("keydown", handleEscClose)
+
+        return ()=>{window.removeEventListener("keydown", handleEscClose)}
+    }, [])
 
 
     return(<>
-    <div className="backdrop">
-        <div className="modal">
-        <img src="" alt="" />
+    <div onClick={handleBackdropClose} className={style.backdrop}>
+        <div className={style.modal}>
+        <img src={onImageUrl} alt="" />
         </div>
 
     </div>

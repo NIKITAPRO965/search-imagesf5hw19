@@ -1,8 +1,8 @@
-function ImageGalleryItem({ img }) {
+function ImageGalleryItem({ img, onImageClick }) {
   return (
     <>
       <li>
-        <img src={img.previewURL} alt={img.tags} />
+        <img onClick={()=> onImageClick(img.largeImageURL)} src={img.previewURL} alt={img.tags} />
       </li>
     </>
   );
