@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 import Searchbar from "./components/Searchbar/Searchbar";
 import { fetchImages } from "./api";
@@ -27,13 +27,17 @@ function App() {
       .finally(() => setLoading(false));
   }, [query, page]);
 
-  const handleSerch = (text) => {
-    setQuery(text);
-  };
+  const handleSearch = (text) => {
+  setQuery(text);
+  setPage(1);
+  setImages([]);
+};
 
-  const loadMore = () => {
+
+
+  const loadMore = useCallback(()=>{
     setPage((prev) => prev + 1);
-  };
+  }, [])
 
   const handleImageClick = (url) => {
  setSelectImage(url)
@@ -45,7 +49,7 @@ function App() {
 
   return (
     <>
-      <Searchbar onSearch={handleSerch} />
+      <Searchbar onSearch={handleSearch} />
       {loading && <Loader />}
       <ImageGallery images={images} onImageClick={handleImageClick}/>
       {images.length > 0 && <Button onClick={loadMore} />}

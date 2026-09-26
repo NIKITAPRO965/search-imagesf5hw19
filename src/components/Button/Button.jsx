@@ -1,4 +1,4 @@
-
+import { memo } from "react"
 
 
 function Button({onClick}){
@@ -9,4 +9,4 @@ function Button({onClick}){
     </>)
 }
 
-export default Button
+export default memo(Button)
