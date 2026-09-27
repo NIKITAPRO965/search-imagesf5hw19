@@ -1,12 +1,9 @@
-
-
-
-function Loader(){
-
-
-    return(<>
-    <p>Loading...</p>
-    </>)
+function Loader() {
+  return (
+    <>
+      <p>Loading...</p>
+    </>
+  );
 }
 
-export default Loader
+export default Loader;
